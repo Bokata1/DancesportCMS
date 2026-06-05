@@ -24,7 +24,24 @@ export default {
         fontFamily: {
           sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         },
-
+          keyframes: {
+            danceLeft: {
+              '0%, 100%': {transform: 'rotate(-15deg) translateY(0)'},
+              '25%': { transform: 'rotate(15deg) translateY(-8px)'},
+              '50%': { transform: 'rotate(-15deg) translateY(0)'},
+              '75%': { transform: 'rotate(15deg) translateY(-8px)'},
+            },
+            danceRight: {
+              '0%, 100%': {transform: 'rotate(15deg) translateY(0)'},
+              '25%': { transform: 'rotate(-15deg)  translateY(-8px)'},
+              '50%': { transform: 'rotate(15deg) translateY(0)'},
+              '75%': { transform: 'rotate(-15deg) translateY(-8px)'},
+            },
+          },
+          animation: {
+            'dance-left': 'danceLeft 1.2s ease-in-out infinite',
+            'dance-right': 'danceRight 1.2s ease-in-out infinite',
+          },
     },
   },
   plugins: [],

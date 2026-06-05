@@ -11,4 +11,10 @@ values
     ('judge5@bgdsf.bg', 'salt006', 'pass006', 'Николай', 'Николов',  'BG-J-005', 0, 1, 1);
 go
 
+update core.Users set JudgePIN = '1001' where Email = 'judge1@bgdsf.bg';
+update core.Users set JudgePIN = '1002' where Email = 'judge2@bgdsf.bg';
+update core.Users set JudgePIN = '1003' where Email = 'judge3@bgdsf.bg'; 
+update core.Users set JudgePIN = '1004' where Email = 'judge4@bgdsf.bg';
+update core.Users set JudgePIN = '1005' where Email = 'judge5@bgdsf.bg';
+go
 

@@ -1,3 +1,4 @@
+use DancesportCMS;
 
 
 create table core.Users (
@@ -14,6 +15,16 @@ create table core.Users (
 	CreatedAt datetime2 not null default getdate()
 
 );
+go
+alter table core.Users
+add IsRulesJudge bit not null default 0;
+
+go
+
+alter table core.Users
+add JudgePIN nvarchar(4) null;
+
+go
 
 create table core.FederationCouples (
 	CoupleID bigint Primary Key identity(1,1),
