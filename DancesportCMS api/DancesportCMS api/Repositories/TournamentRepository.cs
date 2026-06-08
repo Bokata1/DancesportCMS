@@ -573,15 +573,132 @@ namespace DancesportCMS_api.Repositories
 
             return await conn.QueryAsync<Tournament>(sql);
         }
-        public async Task<(bool success, string? error, long? registrationID)> RegisterCoupleAsync(CoupleRegistrationRequest request)
+
+        public async Task<(bool success, string? error, long? roundID)> AddRoundAsync(AddRoundRequest request)
+        {
+            var validTypes = new[] { "QL", "QF", "SF", "FN" };
+            if (!validTypes.Contains(request.RoundType))
+                return (false, "Невалиден тип кръг. Допустими: QL, QF, SF, FN", null);
+
+            if (request.RoundType != "FN" && (request.CouplesToAdvance == null || request.CouplesToAdvance <= 0))
+                return (false, "Полето 'двойки за продължаване' е задължително за нефинални кръгове", null);
+
+            using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
+
+            var tournamentCheckSql = "select IsFinished from events.Tournaments where TournamentID = @tournamentID";
+            var tournament = await conn.QuerySingleOrDefaultAsync<dynamic>(tournamentCheckSql, new { tournamentID = request.TournamentID });
+
+            if (tournament is null)
+                return (false, "Турнирът не съществува", null);
+
+            if ((bool)tournament.IsFinished)
+                return (false, "Турнирът е приключил", null);
+
+            var categoryCheckSql = "select count(*) from core.Categories where CategoryID = @categoryID";
+            var categoryExists = await conn.ExecuteScalarAsync<int>(categoryCheckSql, new { categoryID = request.CategoryID });
+
+            if (categoryExists == 0)
+                return (false, "Категорията не съществува", null);
+
+                var duplicateCheckSql = @"
+                select count(*) from events.Rounds
+                where TournamentID = @tournamentID
+                 and CategoryID = @categoryID
+                and RoundType = @roundType";
+
+            var duplicate = await conn.ExecuteScalarAsync<int>(duplicateCheckSql, new
+            {
+                tournamentID = request.TournamentID,
+                categoryID = request.CategoryID,
+                roundType = request.RoundType
+            });
+
+            if (duplicate > 0)
+                return (false, $"Кръг {request.RoundType} вече съществува за тази категория", null);
+
+            var roundNumberSql = @"
+                select isnull(max(RoundNumber), 0) + 1
+                from events.Rounds
+                where TournamentID = @tournamentID
+                and CategoryID = @categoryID";
+
+            var nextRoundNumber = await conn.ExecuteScalarAsync<int>(roundNumberSql, new
+            {
+                tournamentID = request.TournamentID,
+                categoryID = request.CategoryID
+            });
+
+            var insertSql = @"
+                 insert into events.Rounds
+                (TournamentID, CategoryID, RoundType, RoundNumber, Status, CouplesToAdvance, CreatedAt)
+                output inserted.RoundID
+                values (@TournamentID, @CategoryID, @RoundType, @RoundNumber, 'PN', @CouplesToAdvance, sysdatetime())";
+
+            var roundID = await conn.ExecuteScalarAsync<long>(insertSql, new
+            {
+                TournamentID = request.TournamentID,
+                CategoryID = request.CategoryID,
+                RoundType = request.RoundType,
+                RoundNumber = nextRoundNumber,
+                CouplesToAdvance = request.CouplesToAdvance
+            });
+
+            return (true, null, roundID);
+        }
+
+        public async Task<(bool success, string? error)> AssignJudgesToRoundAsync(long roundID, List<long> judgeUserIDs)
         {
             using var conn = new SqlConnection(_connectionString);
             await conn.OpenAsync();
 
-                    var tournamentSql = @"
-                        select IsRegistrationOpen, IsFinished
-                        from events.Tournaments
-                        where TournamentID = @tournamentID";
+            var roundCheckSql = "select Status from events.Rounds where RoundID = @roundID";
+            var status = await conn.ExecuteScalarAsync<string>(roundCheckSql, new { roundID });
+
+            if (status is null)
+                return (false, "Кръгът не съществува");
+
+            if (status == "CL")
+                return (false, "Не можете да променяте съдии за приключил кръг");
+
+            var judgesCheckSql = @"
+                select count(*) from core.Users
+                where UserID in @userIDs and IsJudge = 1";
+
+            var judgesFound = await conn.ExecuteScalarAsync<int>(judgesCheckSql, new
+            {
+                userIDs = judgeUserIDs
+            });
+
+            if (judgesFound != judgeUserIDs.Count)
+                return (false, "Един или повече от избраните потребители не са съдии");
+
+            var deleteSql = "delete from judging.JudgePanelAssignments where RoundID = @roundID";
+            await conn.ExecuteAsync(deleteSql, new { roundID });
+
+                var insertSql = @"
+                insert into judging.JudgePanelAssignments (RoundID, UserID)
+                values (@RoundID, @UserID)";
+
+            foreach (var userID in judgeUserIDs)
+            {
+                await conn.ExecuteAsync(insertSql, new { RoundID = roundID, UserID = userID });
+            }
+
+            return (true, null);
+        }
+
+
+
+        public async Task<(bool success, string? error, List<long>? registrationIDs)> RegisterCoupleAsync(CoupleRegistrationRequest request)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
+
+            var tournamentSql = @"
+                select IsRegistrationOpen, IsFinished
+                from events.Tournaments
+                where TournamentID = @tournamentID";
 
             var tournament = await conn.QuerySingleOrDefaultAsync<dynamic>(tournamentSql, new
             {
@@ -592,50 +709,69 @@ namespace DancesportCMS_api.Repositories
                 return (false, "Турнирът не съществува", null);
 
             if ((bool)tournament.IsFinished)
-                return (false, "Турнирът е приключила", null);
+                return (false, "Турнирът е приключил", null);
 
             if (!(bool)tournament.IsRegistrationOpen)
                 return (false, "Регистрацията за този турнир е затворена", null);
 
-            var categorySql = "select count(*) from core.Categories where CategoryID = @categoryID";
-            var categoryExists = await conn.ExecuteScalarAsync<int>(categorySql, new
+            if (request.CategoryIDs == null || request.CategoryIDs.Count == 0)
+                return (false, "Изберете поне една категория", null);
+
+            var categoryCheckSql = @"
+                select count(*) from core.Categories
+                where CategoryID in @categoryIDs";
+
+            var categoriesFound = await conn.ExecuteScalarAsync<int>(categoryCheckSql, new
             {
-                categoryID = request.CategoryID
+                categoryIDs = request.CategoryIDs
             });
 
-            if (categoryExists == 0)
-                return (false, "Не съществува категория", null);
+            if (categoriesFound != request.CategoryIDs.Count)
+                return (false, "Една или повече категории не съществуват", null);
 
-                        var startNumberSql = @"
-                            select isnull(max(StartNumber), 0) + 1
-                            from events.TournamentsRegistration
-                            where TournamentID = @tournamentID";
+            var registrationIDs = new List<long>();
+            var insertSql = @"
+                insert into events.TournamentsRegistration
+                       (TournamentID, CategoryID, FederationID, StartNumber,
+                        RegPartner1Name, RegPartner2Name, RegClubName,
+                        HadPaidFee, IsCheckedIn, IsDisqualified, RegisteredAt)
+                output inserted.RegistrationID
+                values (@TournamentID, @CategoryID, null, @StartNumber,
+                        @Partner1Name, @Partner2Name, @ClubName, 0, 0, 0, sysdatetime())";
+
+            
+            //fix 1 start number per tournament not per cat 
+            
+            var startNumberSql = @"
+                    select isnull(max(StartNumber), 0) + 1
+                    from events.TournamentsRegistration
+                    where TournamentID = @tournamentID ";
 
             var nextStartNumber = await conn.ExecuteScalarAsync<long>(startNumberSql, new
             {
                 tournamentID = request.TournamentID
+
             });
 
-           
-            var insertSql = @"
-                    insert into events.TournamentsRegistration
-                           (TournamentID,CategoryID,FederationID,StartNumber,
-                            RegPartner1Name,RegPartner2Name,RegClubName,
-                            HadPaidFee, IsCheckedIn,IsDisqualified,RegisteredAt)
-                    output inserted.RegistrationID
-                    values (@TournamentID, @CategoryID, null, @StartNumber,@Partner1Name, @Partner2Name, @ClubName, 0, 0, 0, sysdatetime())";
 
-            var registrationID = await conn.ExecuteScalarAsync<long>(insertSql, new
+            foreach (var categoryID in request.CategoryIDs)
             {
-                TournamentID = request.TournamentID,
-                CategoryID = request.CategoryID,
-                StartNumber = nextStartNumber,
-                Partner1Name = request.Partner1Name,
-                Partner2Name = request.Partner2Name,
-                ClubName = request.ClubName
-            });
+                
 
-            return (true, null, registrationID);
+                var registrationID = await conn.ExecuteScalarAsync<long>(insertSql, new
+                {
+                    TournamentID = request.TournamentID,
+                    CategoryID = categoryID,
+                    StartNumber = nextStartNumber,
+                    Partner1Name = request.Partner1Name,
+                    Partner2Name = request.Partner2Name,
+                    ClubName = request.ClubName
+                });
+
+                registrationIDs.Add(registrationID);
+            }
+
+            return (true, null, registrationIDs);
         }
         public async Task<QualifyingSheet?> GetQualifyingSheetAsync(long roundID)
         {

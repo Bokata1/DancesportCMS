@@ -36,6 +36,18 @@
         }
       }
     },
+    "/api/Bias/judge-club-matrix": {
+      "get": {
+        "tags": [
+          "Bias"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Categories": {
       "get": {
         "tags": [
@@ -279,6 +291,156 @@
         }
       }
     },
+    "/api/Rounds/{id}/qualifying-sheet": {
+      "get": {
+        "tags": [
+          "Rounds"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Rounds": {
+      "post": {
+        "tags": [
+          "Rounds"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoundRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoundRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddRoundRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Rounds/{id}/assign-judges": {
+      "post": {
+        "tags": [
+          "Rounds"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignJudgesRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignJudgesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignJudgesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/RulesViolations/toggle": {
+      "post": {
+        "tags": [
+          "RulesViolations"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToggleViolationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToggleViolationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ToggleViolationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/RulesViolations/round/{roundID}": {
+      "get": {
+        "tags": [
+          "RulesViolations"
+        ],
+        "parameters": [
+          {
+            "name": "roundID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Tournaments": {
       "get": {
         "tags": [
@@ -462,11 +624,106 @@
           }
         }
       }
+    },
+    "/api/Voting/cast": {
+      "post": {
+        "tags": [
+          "Voting"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CastVoteRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CastVoteRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CastVoteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Voting/{tournamentID}/{categoryID}/results": {
+      "get": {
+        "tags": [
+          "Voting"
+        ],
+        "parameters": [
+          {
+            "name": "tournamentID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "categoryID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Voting/{tournamentID}/{categoryID}/couples": {
+      "get": {
+        "tags": [
+          "Voting"
+        ],
+        "parameters": [
+          {
+            "name": "tournamentID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "categoryID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "CoupleRegistrationRequest": {
+      "AddRoundRequest": {
         "type": "object",
         "properties": {
           "tournamentID": {
@@ -476,6 +733,69 @@
           "categoryID": {
             "type": "integer",
             "format": "int64"
+          },
+          "roundType": {
+            "type": "string",
+            "nullable": true
+          },
+          "couplesToAdvance": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssignJudgesRequest": {
+        "type": "object",
+        "properties": {
+          "judgeUserIDs": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CastVoteRequest": {
+        "type": "object",
+        "properties": {
+          "tournamentID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "categoryID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "registrationID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "voterFingerprint": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CoupleRegistrationRequest": {
+        "type": "object",
+        "properties": {
+          "tournamentID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "categoryIDs": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "nullable": true
           },
           "partner1Name": {
             "type": "string",
@@ -592,6 +912,41 @@
           "markValue": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ToggleViolationRequest": {
+        "type": "object",
+        "properties": {
+          "tournamentID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "roundID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "categoryID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "registrationID": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "flagType": {
+            "type": "string",
+            "nullable": true
+          },
+          "danceID": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "flaggedBy": {
+            "type": "integer",
+            "format": "int64"
           }
         },
         "additionalProperties": false

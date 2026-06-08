@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { api } from '../api'
+import {useNavigate} from 'react-router-dom'
 
 const ROUND_TYPE_LABELS = {
   QL: 'Квалификация',
@@ -14,6 +15,7 @@ function SkatingSheetPage() {
   const [sheet, setSheet] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     api.rounds.getSkatingSheet(id)
@@ -21,6 +23,12 @@ function SkatingSheetPage() {
       .catch(err => setError(err.message))
       .finally(() => setLoading(false))
   }, [id])
+
+      useEffect(() => {
+      if (sheet && sheet.roundType && sheet.roundType !== 'FN') {
+        navigate(`/rounds/${id}/qualifying-sheet`, { replace: true })
+      }
+    }, [sheet, id, navigate])
 
   if (loading) return <p className="text-zinc-500">Зареждане...</p>
   if (error) return <p className="text-red-600">Грешка: {error}</p>

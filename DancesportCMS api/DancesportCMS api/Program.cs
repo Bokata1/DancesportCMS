@@ -15,9 +15,15 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<TournamentRepository>();
+builder.Services.AddScoped<BiasRepository>();
 builder.Services.AddScoped<CategoryRepository>();
 builder.Services.AddScoped<DanceRepository>();
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddSingleton<MongoService>();
+builder.Services.AddScoped<VotingRepository>();
+builder.Services.AddScoped<RulesViolationsRepository>();
+
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

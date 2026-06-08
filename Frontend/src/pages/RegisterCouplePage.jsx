@@ -8,7 +8,7 @@ function RegisterCouplePage() {
   const [loading, setLoading] = useState(true)
 
   const [tournamentID, setTournamentID] = useState('')
-  const [categoryID, setCategoryID] = useState('')
+  const [selectedCategories, setSelectedCategories] = useState(new Set())
   const [partner1, setPartner1] = useState('')
   const [partner2, setPartner2] = useState('')
   const [clubName, setClubName] = useState('')
@@ -40,6 +40,18 @@ function RegisterCouplePage() {
     })
   }
 
+  const toggleCategory = (categoryID) => {
+    setSelectedCategories(prev => {
+      const next = new Set(prev)
+      if (next.has(categoryID)) {
+        next.delete(categoryID)
+      } else {
+        next.add(categoryID)
+      }
+      return next
+    })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setSubmitting(true)
@@ -49,23 +61,30 @@ function RegisterCouplePage() {
     try {
       const result = await api.tournaments.registerCouple({
         tournamentID: Number(tournamentID),
-        categoryID: Number(categoryID),
+        categoryIDs: Array.from(selectedCategories),
         partner1Name: partner1,
         partner2Name: partner2,
         clubName: clubName,
       })
 
       const tournament = tournaments.find(t => t.tournamentID === Number(tournamentID))
+      const selectedCategoryNames = categories
+        .filter(c => selectedCategories.has(c.categoryID))
+        .map(c => `${c.ageGroup}${c.class ? ' ' + c.class : ''} ${c.danceStyle}`)
+
       setSuccess({
         tournamentName: tournament?.tournamentName || '',
         partner1: partner1,
         partner2: partner2,
-        registrationID: result.registrationID,
+        categoryCount: selectedCategoryNames.length,
+        categoryNames: selectedCategoryNames,
+        registrationIDs: result.registrationIDs,
       })
 
       setPartner1('')
       setPartner2('')
       setClubName('')
+      setSelectedCategories(new Set())
     } catch (err) {
       setError(err.message || 'Грешка при регистрация')
     } finally {
@@ -74,7 +93,6 @@ function RegisterCouplePage() {
   }
 
   if (loading) return <p className="text-zinc-500">Зареждане...</p>
-
 
   if (success) {
     return (
@@ -86,8 +104,13 @@ function RegisterCouplePage() {
         <p className="text-zinc-600 mb-2">
           Двойката <strong>{success.partner1} / {success.partner2}</strong>
         </p>
-        <p className="text-zinc-600 mb-8">
+        <p className="text-zinc-600 mb-2">
           е регистрирана в <strong>{success.tournamentName}</strong>
+        </p>
+        <p className="text-zinc-600 mb-6">
+          в <strong>{success.categoryCount}</strong>{' '}
+          {success.categoryCount === 1 ? 'категория' : 'категории'}:{' '}
+          {success.categoryNames.join(', ')}
         </p>
 
         <div className="flex gap-3 justify-center">
@@ -95,20 +118,20 @@ function RegisterCouplePage() {
             onClick={() => setSuccess(null)}
             className="px-5 py-2 bg-burgundy-900 text-white rounded-lg font-medium hover:bg-burgundy-800"
           >
-            Регистрирайте нова двойка
+            Регистрирай друга двойка
           </button>
           <Link
             to="/"
             className="px-5 py-2 border border-zinc-300 text-zinc-700 rounded-lg font-medium hover:bg-zinc-50"
           >
-            Към началото
+            Към началната страница
           </Link>
         </div>
       </div>
     )
   }
 
-  
+
   if (tournaments.length === 0) {
     return (
       <div className="max-w-2xl mx-auto">
@@ -116,15 +139,15 @@ function RegisterCouplePage() {
           Регистрация на двойка
         </h1>
         <p className="text-zinc-600 mb-8">
-          Регистрирайте двойката.
+          Регистрация за двойки за предстоящи състезания
         </p>
 
         <div className="bg-white border border-zinc-200 rounded-lg p-8 text-center">
           <p className="text-zinc-500 mb-2">
-            Няма активни турнири.
+            В момента няма турнири с отворена регистрация.
           </p>
           <p className="text-sm text-zinc-400">
-            Моля проверете  отново по-късно или се свържете с организатора за повече информация.
+            Проверете отново по-късно или се свържете с организатор.
           </p>
         </div>
       </div>
@@ -134,10 +157,10 @@ function RegisterCouplePage() {
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="text-3xl font-semibold text-zinc-900 mb-2">
-        Регистрация на двойка
+        Регистрация
       </h1>
       <p className="text-zinc-600 mb-8">
-        Регистрирайте двойката.
+       Регистрация за двойки за предстоящи състезания.
       </p>
 
       <form onSubmit={handleSubmit} className="bg-white border border-zinc-200 rounded-lg p-6">
@@ -164,41 +187,61 @@ function RegisterCouplePage() {
 
           {}
           <div>
-            <label className="block text-sm font-medium text-zinc-700 mb-1">
-              Категории
+            <label className="block text-sm font-medium text-zinc-700 mb-2">
+              Категории{' '}
+              {selectedCategories.size > 0 && (
+                <span className="text-zinc-500 font-normal">
+                  ({selectedCategories.size} избрани)
+                </span>
+              )}
             </label>
-            <select
-              value={categoryID}
-              onChange={e => setCategoryID(e.target.value)}
-              className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:border-burgundy-900 bg-white"
-              required
-            >
-              <option value="">Изберете категории...</option>
-              {categories.map(c => (
-                <option key={c.categoryID} value={c.categoryID}>
-                  {c.ageGroup} {c.danceStyle}
-                  {c.class ? ` ${c.class}` : ''}
-                </option>
-              ))}
-            </select>
+            <div className="border border-zinc-300 rounded-lg max-h-64 overflow-y-auto">
+              {categories.map(c => {
+                const categoryLabel = `${c.ageGroup}${c.class ? ' ' + c.class : ''} ${c.danceStyle}`
+                const isSelected = selectedCategories.has(c.categoryID)
+                return (
+                  <label
+                    key={c.categoryID}
+                    className={`flex items-center gap-3 px-3 py-2.5 cursor-pointer border-b border-zinc-100 last:border-0 hover:bg-zinc-50 transition-colors ${
+                      isSelected ? 'bg-burgundy-50' : ''
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => toggleCategory(c.categoryID)}
+                      className="w-4 h-4 accent-burgundy-900"
+                    />
+                    <span className={`text-sm ${isSelected ? 'font-medium text-zinc-900' : 'text-zinc-700'}`}>
+                      {categoryLabel}
+                    </span>
+                  </label>
+                )
+              })}
+            </div>
+            {selectedCategories.size === 0 && (
+              <p className="text-xs text-zinc-500 mt-1">
+                Изберете категориите в който ще се състезава двойката .
+              </p>
+            )}
           </div>
 
           {}
           <div className="pt-2 border-t border-zinc-100">
             <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
-              Информация за двойката
+              Данни на двойката
             </h3>
 
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-zinc-700 mb-1">
-                  Партньор
+                  Партньор 1
                 </label>
                 <input
                   type="text"
                   value={partner1}
                   onChange={e => setPartner1(e.target.value)}
-                  placeholder="Име"
+                  placeholder="Име на партньор 1"
                   className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:border-burgundy-900"
                   required
                 />
@@ -206,13 +249,13 @@ function RegisterCouplePage() {
 
               <div>
                 <label className="block text-sm font-medium text-zinc-700 mb-1">
-                  Партньорка
+                  Партньор 2 
                 </label>
                 <input
                   type="text"
                   value={partner2}
                   onChange={e => setPartner2(e.target.value)}
-                  placeholder="Име"
+                  placeholder="Име на партньор 2"
                   className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:border-burgundy-900"
                   required
                 />
@@ -226,7 +269,7 @@ function RegisterCouplePage() {
                   type="text"
                   value={clubName}
                   onChange={e => setClubName(e.target.value)}
-                  placeholder="Клуб по спортни танци"
+                  placeholder="Клуб Олимпия"
                   className="w-full px-3 py-2 border border-zinc-300 rounded-lg focus:outline-none focus:border-burgundy-900"
                   required
                 />
@@ -242,10 +285,21 @@ function RegisterCouplePage() {
 
           <button
             type="submit"
-            disabled={!tournamentID || !categoryID || !partner1 || !partner2 || !clubName || submitting}
+            disabled={
+              !tournamentID ||
+              selectedCategories.size === 0 ||
+              !partner1 ||
+              !partner2 ||
+              !clubName ||
+              submitting
+            }
             className="w-full h-11 bg-burgundy-900 text-white rounded-lg font-medium hover:bg-burgundy-800 disabled:bg-zinc-300 disabled:cursor-not-allowed"
           >
-            {submitting ? 'Регистация...' : 'Регистрирай двойката'}
+            {submitting
+              ? 'Регистриране...'
+              : selectedCategories.size > 1
+                ? `Регистрирай в ${selectedCategories.size} категории`
+                : 'Регистрирай двойката'}
           </button>
         </div>
       </form>

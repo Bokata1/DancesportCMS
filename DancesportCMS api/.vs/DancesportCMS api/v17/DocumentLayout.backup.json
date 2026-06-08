@@ -3,48 +3,52 @@
   "WorkspaceRootPath": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\repositories\\tournamentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\repositories\\tournamentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\repositories\\rulesviolationsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\repositories\\rulesviolationsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\controllers\\tournamentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\controllers\\tournamentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\models\\vote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\models\\vote.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\models\\usersession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\models\\usersession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\models\\createtournamentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\models\\createtournamentrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\controllers\\rulesviolationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\controllers\\rulesviolationscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\controllers\\judgeauthcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\controllers\\judgeauthcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\models\\marksubmission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\models\\marksubmission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\models\\roundcouple.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\models\\roundcouple.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\repositories\\votingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\repositories\\votingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\controllers\\votingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\controllers\\votingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\repositories\\mongoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\repositories\\mongoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\controllers\\judgeauthcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\controllers\\judgeauthcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\repositories\\tournamentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\repositories\\tournamentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\controllers\\roundscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\controllers\\roundscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|c:\\users\\asus\\desktop\\dancesportcms\\dancesportcms api\\dancesportcms api\\models\\assignjudgesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2DFB4E-46A7-4C63-9A3E-B18433952592}|DancesportCMS api\\DancesportCMS api.csproj|solutionrelative:dancesportcms api\\models\\assignjudgesrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,139 +62,155 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "JudgeAuthController.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\JudgeAuthController.cs",
               "RelativeDocumentMoniker": "DancesportCMS api\\Controllers\\JudgeAuthController.cs",
               "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\JudgeAuthController.cs",
               "RelativeToolTip": "DancesportCMS api\\Controllers\\JudgeAuthController.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAQwCcAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAwCQAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-28T19:38:06.102Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserSession.cs",
-              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\UserSession.cs",
-              "RelativeDocumentMoniker": "DancesportCMS api\\Models\\UserSession.cs",
-              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\UserSession.cs",
-              "RelativeToolTip": "DancesportCMS api\\Models\\UserSession.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T19:19:16.862Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CreateTournamentRequest.cs",
-              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\CreateTournamentRequest.cs",
-              "RelativeDocumentMoniker": "DancesportCMS api\\Models\\CreateTournamentRequest.cs",
-              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\CreateTournamentRequest.cs",
-              "RelativeToolTip": "DancesportCMS api\\Models\\CreateTournamentRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T19:28:34.232Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "RoundCouple.cs",
-              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\RoundCouple.cs",
-              "RelativeDocumentMoniker": "DancesportCMS api\\Models\\RoundCouple.cs",
-              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\RoundCouple.cs",
-              "RelativeToolTip": "DancesportCMS api\\Models\\RoundCouple.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAYwBcAAAA6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-27T11:36:36.549Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Repositories\\UserRepository.cs",
-              "RelativeDocumentMoniker": "DancesportCMS api\\Repositories\\UserRepository.cs",
-              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Repositories\\UserRepository.cs",
-              "RelativeToolTip": "DancesportCMS api\\Repositories\\UserRepository.cs",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAAwF4AAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-24T11:03:13.063Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 9,
               "Title": "TournamentRepository.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Repositories\\TournamentRepository.cs",
               "RelativeDocumentMoniker": "DancesportCMS api\\Repositories\\TournamentRepository.cs",
               "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Repositories\\TournamentRepository.cs",
               "RelativeToolTip": "DancesportCMS api\\Repositories\\TournamentRepository.cs",
-              "ViewState": "AgIAAJcAAAAAAAAAAAAQwK8AAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAC4CAAAAAAAAAAAUwDsCAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-27T11:43:10.688Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RulesViolationsController.cs",
+              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\RulesViolationsController.cs",
+              "RelativeDocumentMoniker": "DancesportCMS api\\Controllers\\RulesViolationsController.cs",
+              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\RulesViolationsController.cs",
+              "RelativeToolTip": "DancesportCMS api\\Controllers\\RulesViolationsController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAxwB0AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-08T20:22:31.883Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "VotingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Repositories\\VotingRepository.cs",
+              "RelativeDocumentMoniker": "DancesportCMS api\\Repositories\\VotingRepository.cs",
+              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Repositories\\VotingRepository.cs",
+              "RelativeToolTip": "DancesportCMS api\\Repositories\\VotingRepository.cs",
+              "ViewState": "AgIAAIAAAAAAAAAAAAAgwGIAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-07T20:39:16.227Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "TournamentsController.cs",
-              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\TournamentsController.cs",
-              "RelativeDocumentMoniker": "DancesportCMS api\\Controllers\\TournamentsController.cs",
-              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\TournamentsController.cs",
-              "RelativeToolTip": "DancesportCMS api\\Controllers\\TournamentsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgAAAAmAAAAAAAAAA==",
+              "Title": "Vote.cs",
+              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\Vote.cs",
+              "RelativeDocumentMoniker": "DancesportCMS api\\Models\\Vote.cs",
+              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\Vote.cs",
+              "RelativeToolTip": "DancesportCMS api\\Models\\Vote.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAA5wAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-01T19:26:05.963Z",
+              "WhenOpened": "2026-06-07T20:36:03.484Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "MarkSubmission.cs",
-              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\MarkSubmission.cs",
-              "RelativeDocumentMoniker": "DancesportCMS api\\Models\\MarkSubmission.cs",
-              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\MarkSubmission.cs",
-              "RelativeToolTip": "DancesportCMS api\\Models\\MarkSubmission.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAjAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "RulesViolationsRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Repositories\\RulesViolationsRepository.cs",
+              "RelativeDocumentMoniker": "DancesportCMS api\\Repositories\\RulesViolationsRepository.cs",
+              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Repositories\\RulesViolationsRepository.cs",
+              "RelativeToolTip": "DancesportCMS api\\Repositories\\RulesViolationsRepository.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAYwC8AAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-27T13:37:34.765Z"
+              "WhenOpened": "2026-06-08T20:15:00.698Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "DancesportCMS api\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "DancesportCMS api\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAUwCIAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "VotingController.cs",
+              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\VotingController.cs",
+              "RelativeDocumentMoniker": "DancesportCMS api\\Controllers\\VotingController.cs",
+              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\VotingController.cs",
+              "RelativeToolTip": "DancesportCMS api\\Controllers\\VotingController.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-26T19:41:20.925Z"
+              "WhenOpened": "2026-06-07T20:42:13.069Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Program.cs",
               "RelativeDocumentMoniker": "DancesportCMS api\\Program.cs",
               "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Program.cs",
               "RelativeToolTip": "DancesportCMS api\\Program.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAQwBQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-23T21:13:07.497Z"
+              "WhenOpened": "2026-05-23T21:13:07.497Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 5,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\appsettings.json",
               "RelativeDocumentMoniker": "DancesportCMS api\\appsettings.json",
               "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\appsettings.json",
               "RelativeToolTip": "DancesportCMS api\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-05-23T20:59:45.91Z"
+              "WhenOpened": "2026-06-07T20:51:11.408Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MongoService.cs",
+              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Repositories\\MongoService.cs",
+              "RelativeDocumentMoniker": "DancesportCMS api\\Repositories\\MongoService.cs",
+              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Repositories\\MongoService.cs",
+              "RelativeToolTip": "DancesportCMS api\\Repositories\\MongoService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-07T20:31:47.29Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AssignJudgesRequest.cs",
+              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\AssignJudgesRequest.cs",
+              "RelativeDocumentMoniker": "DancesportCMS api\\Models\\AssignJudgesRequest.cs",
+              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Models\\AssignJudgesRequest.cs",
+              "RelativeToolTip": "DancesportCMS api\\Models\\AssignJudgesRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-07T10:18:22.361Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "RoundsController.cs",
+              "DocumentMoniker": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\RoundsController.cs",
+              "RelativeDocumentMoniker": "DancesportCMS api\\Controllers\\RoundsController.cs",
+              "ToolTip": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\Controllers\\RoundsController.cs",
+              "RelativeToolTip": "DancesportCMS api\\Controllers\\RoundsController.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAA7wGAAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-07T10:19:43.916Z"
             }
           ]
         }

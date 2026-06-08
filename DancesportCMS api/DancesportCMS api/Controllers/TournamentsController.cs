@@ -79,16 +79,24 @@ public class TournamentsController : ControllerBase
 
     [HttpPost("register-couple")]
     public async Task<IActionResult> RegisterCouple([FromBody] CoupleRegistrationRequest request)
-
     {
         if (string.IsNullOrWhiteSpace(request.Partner1Name))
-            return BadRequest(new { error = "Името на 1вия парньор е задължително" });
+            return BadRequest(new { error = "Името на първия партньор е задължително" });
+
         if (string.IsNullOrWhiteSpace(request.Partner2Name))
-            return BadRequest(new { error = "Името на 2рия парньор е задължително" });
+            return BadRequest(new { error = "Името на втория партньор е задължително" });
+
         if (string.IsNullOrWhiteSpace(request.ClubName))
-            return BadRequest(new { error = "Клуба е задължителен" });
-        var (success, error, registrationID) = await _repo.RegisterCoupleAsync(request);
-        if (!success) return BadRequest(new { error });
-        return Ok(new {success = true, registrationID});
+            return BadRequest(new { error = "Името на клуба е задължително" });
+
+        if (request.CategoryIDs == null || request.CategoryIDs.Count == 0)
+            return BadRequest(new { error = "Изберете поне една категория" });
+
+        var (success, error, registrationIDs) = await _repo.RegisterCoupleAsync(request);
+
+        if (!success)
+            return BadRequest(new { error });
+
+        return Ok(new { success = true, registrationIDs });
     }
 }

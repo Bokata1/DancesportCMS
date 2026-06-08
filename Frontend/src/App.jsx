@@ -5,6 +5,7 @@ import TournamentDetailPage from './pages/TournamentDetailPage'
 import JudgesPage from './pages/JudgesPage'
 import NotFoundPage from './pages/NotFoundPage'
 import SkatingSheetPage from './pages/SkatingSheetPage'
+import QualifyingSheetPage from './pages/QualifyingSheetPage'
 import JudgeLoginPage from './pages/JudgeLoginPage'
 import JudgeRoundsPage from './pages/JudgeRoundsPage'
 import LoginPage from './pages/LoginPage'
@@ -13,6 +14,9 @@ import AdminDashboardPage from './pages/AdminDashboardPage'
 import AdminTournamentPage from './pages/AdminTournamentPage'
 import RegisterCouplePage from './pages/RegisterCouplePage'
 import AdminRoundPage from './pages/AdminRoundPage'
+import BiasDashboardPage from './pages/BiasDashboard'
+import VotePage from './pages/VotePage'
+import VoteResultsPage from './pages/VoteResultsPage'
 
 function App() {
 
@@ -28,11 +32,15 @@ function App() {
           <Route path="/judge/login" element={<JudgeLoginPage />} />
           <Route path="/judge/rounds" element={<JudgeRoundsPage />} />
           <Route path="/rounds/:id/skating" element={<SkatingSheetPage />} />
+          <Route path="/rounds/:id/qualifying-sheet" element={<QualifyingSheetPage />} />
           <Route path="/judge/rounds/:id" element={<MarkEntryPage />} />
           <Route path="/admin" element={<AdminDashboardPage />} />
           <Route path="/admin/tournaments/:id" element={<AdminTournamentPage />} />
           <Route path="/admin/rounds/:id" element={<AdminRoundPage />} />
+          <Route path="/admin/bias" element={<BiasDashboardPage />} />
           <Route path="/register" element={<RegisterCouplePage />} />
+          <Route path="/vote/:tournamentID/:categoryID" element={<VotePage />} />
+          <Route path="/vote-results/:tournamentID/:categoryID" element={<VoteResultsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

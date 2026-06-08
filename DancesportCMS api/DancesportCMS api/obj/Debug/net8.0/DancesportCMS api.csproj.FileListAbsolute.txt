@@ -152,3 +152,9 @@ C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\obj\Debu
 C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\obj\Debug\net8.0\DancesportCMS api.pdb
 C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\obj\Debug\net8.0\DancesportCMS api.genruntimeconfig.cache
 C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\obj\Debug\net8.0\ref\DancesportCMS api.dll
+C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\bin\Debug\net8.0\DnsClient.dll
+C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\bin\Debug\net8.0\MongoDB.Bson.dll
+C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\bin\Debug\net8.0\MongoDB.Driver.dll
+C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\bin\Debug\net8.0\SharpCompress.dll
+C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\bin\Debug\net8.0\Snappier.dll
+C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\bin\Debug\net8.0\ZstdSharp.dll

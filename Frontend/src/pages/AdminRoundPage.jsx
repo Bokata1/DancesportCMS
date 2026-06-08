@@ -173,11 +173,14 @@ function AdminRoundPage() {
 
             {progress.status === 'CL' && (
               <Link
-                to={`/rounds/${roundID}/skating`}
+                to={progress.roundType === 'FN'
+                  ? `/rounds/${roundID}/skating`
+                  : `/rounds/${roundID}/qualifying-sheet`}
                 className="px-4 py-2 bg-burgundy-900 text-white rounded-lg font-medium hover:bg-burgundy-800"
               >
                 Виж резултатите →
               </Link>
+
             )}
           </div>
         </div>

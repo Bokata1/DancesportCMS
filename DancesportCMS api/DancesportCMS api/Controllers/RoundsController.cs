@@ -82,6 +82,31 @@ namespace DancesportCMS_api.Controllers
             return Ok(sheet);
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddRound([FromBody] AddRoundRequest request)
+        {
+            var (success, error, roundID) = await _repo.AddRoundAsync(request);
+
+            if (!success)
+                return BadRequest(new { error });
+
+            return Ok(new { success = true, roundID });
+        }
+
+        [HttpPost("{id}/assign-judges")]
+        public async Task<IActionResult> AssignJudges(long id, [FromBody] AssignJudgesRequest request)
+        {
+            if (request.JudgeUserIDs == null || request.JudgeUserIDs.Count == 0)
+                return BadRequest(new { error = "Изберете поне един съдия" });
+
+            var (success, error) = await _repo.AssignJudgesToRoundAsync(id, request.JudgeUserIDs);
+
+            if (!success)
+                return BadRequest(new { error });
+
+            return Ok(new { success = true });
+        }
     }
      
     

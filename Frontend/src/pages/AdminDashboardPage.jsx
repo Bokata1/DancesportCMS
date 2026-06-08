@@ -55,19 +55,26 @@ function AdminDashboardPage() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-semibold text-zinc-900 mb-1">Администрация</h1>
-          <p className="text-zinc-500">Управление на турнири</p>
-        </div>
-        <button
-          onClick={() => setShowCreateForm(!showCreateForm)}
-          className="px-5 py-2.5 bg-burgundy-900 text-white rounded-lg font-medium hover:bg-burgundy-800"
-        >
-          {showCreateForm ? 'Откажи' : '+ Нов Турнир'}
-        </button>
-      </div>
-
+                <div className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-3xl font-semibold text-zinc-900 mb-1">Администрация</h1>
+              <p className="text-zinc-500">Управление на турнири</p>
+            </div>
+            <div className="flex gap-2">
+              <Link
+                to="/admin/bias"
+                className="px-5 py-2.5 bg-white border border-zinc-300 text-zinc-700 rounded-lg font-medium hover:bg-zinc-50"
+              >
+                Анализ на пристрастност
+              </Link>
+              <button
+                onClick={() => setShowCreateForm(!showCreateForm)}
+                className="px-5 py-2.5 bg-burgundy-900 text-white rounded-lg font-medium hover:bg-burgundy-800"
+              >
+                {showCreateForm ? 'Откажи' : '+ Нов турнир'}
+              </button>
+            </div>
+          </div>
       {showCreateForm && (
         <CreateTournamentForm
           onSuccess={() => {
