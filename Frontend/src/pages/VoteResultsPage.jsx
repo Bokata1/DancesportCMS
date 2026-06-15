@@ -16,7 +16,7 @@ function VoteResultsPage() {
         .finally(() => setLoading(false))
     }
     load()
-    const interval = setInterval(load, 5000)  // refresh every 5 seconds
+    const interval = setInterval(load, 5000)  
     return () => clearInterval(interval)
   }, [tournamentID, categoryID])
 
@@ -29,7 +29,7 @@ function VoteResultsPage() {
       <div className="text-center mb-6">
         <p className="text-sm text-zinc-500 mb-1">{data.tournamentName}</p>
         <h1 className="text-2xl font-semibold text-zinc-900 mb-2">
-          {data.categoryName} — Любимец на публиаката
+          {data.categoryName} — Любимец на публиката
         </h1>
         <p className="text-zinc-600">
           Общо {data.totalVotes} {data.totalVotes === 1 ? 'глас' : 'гласа'}

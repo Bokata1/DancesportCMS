@@ -60,7 +60,14 @@ function TournamentDetailPage() {
       <section className="mb-10">
         <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
           Кръгове и категории
+          
         </h2>
+          <Link
+          to={`/tournaments/${id}/results`}
+          className="inline-flex items-center px-4 py-2 bg-burgundy-900 text-white rounded-lg font-medium hover:bg-burgundy-800 text-sm"
+          >
+           Виж резултатите
+        </Link>
 
         {Object.keys(roundsByCategory).length === 0 ? (
           <div className="bg-white border border-zinc-200 rounded-lg p-8 text-center text-zinc-500">
@@ -102,6 +109,7 @@ function TournamentDetailPage() {
         <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
           Съдии ({tournament.judges.length})
         </h2>
+
 
         {tournament.judges.length === 0 ? (
           <div className="bg-white border border-zinc-200 rounded-lg p-8 text-center text-zinc-500">

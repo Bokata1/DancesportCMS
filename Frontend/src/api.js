@@ -28,6 +28,10 @@ export const api = {
     setRegistration: (id, isOpen) => post(`/tournaments/${id}/registration`, { isOpen }),
     getOpenForRegistration: () => get ('/tournaments/open-for-registration'),
     registerCouple: (data) => post('/tournaments/register-couple', data),
+    getResults: (id) => get(`/tournaments/${id}/results`),
+    finalize: (id) => post(`/tournaments/${id}/finalize`, {}),
+    assignHeats: (id) => post(`/tournaments/${id}/assign-heats`, {}),
+    
   },
   rounds: {
     getSkatingSheet: (id) => get(`/rounds/${id}/skating`),
@@ -65,4 +69,10 @@ voting: {
   cast: (data) => post('/voting/cast', data),
   getResults: (tournamentID, categoryID) => get(`/voting/${tournamentID}/${categoryID}/results`),
 },
+rulesViolations: {
+    toggle: (data) => post('/rulesViolations/toggle', data),
+    getRoundView: (roundID) => get(`/rulesViolations/round/${roundID}`),
+    getTournamentView: (tournamentID) => get(`/rulesViolations/tournament/${tournamentID}`),
+
+  },
 }

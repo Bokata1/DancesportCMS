@@ -1,0 +1,52 @@
+[{
+  "_id": {
+    "$oid": "6a28812ed85b6a84f1dbbdfe"
+  },
+  "TournamentID": {
+    "$numberLong": "8"
+  },
+  "RoundID": {
+    "$numberLong": "10003"
+  },
+  "CategoryID": {
+    "$numberLong": "1"
+  },
+  "RegistrationID": {
+    "$numberLong": "20004"
+  },
+  "FlagType": "Choreography",
+  "DanceID": {
+    "$numberLong": "1"
+  },
+  "FlaggedBy": {
+    "$numberLong": "10013"
+  },
+  "FlaggedAt": {
+    "$date": "2026-06-09T21:10:06.888Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a288130d85b6a84f1dbbdff"
+  },
+  "TournamentID": {
+    "$numberLong": "8"
+  },
+  "RoundID": {
+    "$numberLong": "10003"
+  },
+  "CategoryID": {
+    "$numberLong": "1"
+  },
+  "RegistrationID": {
+    "$numberLong": "20012"
+  },
+  "FlagType": "Costume",
+  "DanceID": null,
+  "FlaggedBy": {
+    "$numberLong": "10013"
+  },
+  "FlaggedAt": {
+    "$date": "2026-06-09T21:10:08.818Z"
+  }
+}]

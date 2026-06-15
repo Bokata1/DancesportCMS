@@ -5,8 +5,6 @@ as
 begin
     set nocount on
 
-    -- BDSF : applied to the final round only, called by Mainjudge
-    -- once all marks are in. safe to re-run if a mark gets corrected.
 
     declare @p_judges  int = (select count(*) from judging.JudgePanelAssignments where RoundID = @p_RoundID);
     declare @p_couples int = (select count(distinct RegistrationID) from judging.Marks where RoundID = @p_RoundID);
@@ -19,8 +17,6 @@ begin
     delete from judging.DancePlacements where RoundID = @p_RoundID
 
 
-    -- per dance, walk place thresholds 1..N until each couple hits majority.
-    -- ties resolved by who got there with more judges and a smaller sum.
     ;with t as (
         select 1 as p
         union all
@@ -55,15 +51,14 @@ begin
     )
     insert into judging.DancePlacements (RegistrationID, DanceID, RoundID, DancePlacement)
     select RegistrationID, DanceID, @p_RoundID,
-           -- shared place when keys are identical (e.g. two tied for 1st-2nd -> 1.5 each)
            cast(start_pl * 2 + tied - 1 as numeric(5,2)) / 2.0
     from ranked
     option (maxrecursion 0);
 
 
     -- overall: smaller total of per-dance places wins.
-    -- tie? whoever stacked more high places wins (1sts, then 2nds...).
-    -- still tied? smaller total of raw judge marks.
+    -- tie  more high places wins (1sts, then 2nds...).
+    
     ;with totals as (
         select RegistrationID,sum(DancePlacement) as total
         from judging.DancePlacements
@@ -96,9 +91,19 @@ begin
                                  f1 desc, f2 desc, f3 desc,
                                  f4 desc, f5 desc, f6 desc,
                                  raw_sum),
-           null,    -- TODO: BDSF point table per category - get from registry side
-           0        -- pending Mainjudge  approval
+           null,    
+           1      
     from   breakers;
-
+      update judging.Results
+    set EarnedPoints = case FinalPlace
+        when 1 then 60
+        when 2 then 50
+        when 3 then 40
+        when 4 then 30
+        when 5 then 20
+        when 6 then 10
+        else 0
+    end
+where RoundID = @p_RoundID
 end
 go

@@ -119,6 +119,7 @@ namespace DancesportCMS_api.Repositories
                 from judging.JudgePanelAssignments jpa
                 join core.Users u on u.UserID = jpa.UserID
                 where jpa.RoundID = @roundID
+                      and u.IsRulesJudge = 0
                 order by u.LName, u.FName";
 
             var judges = (await conn.QueryAsync<JudgeColumn>(judgesSql, new { roundID })).ToList();
@@ -216,11 +217,14 @@ namespace DancesportCMS_api.Repositories
             if (round is null) return null;
 
                                         var couplesSql = @"
-                                select tr.RegistrationID,tr.StartNumber
+                                select tr.RegistrationID, tr.StartNumber,
+                                       he_h.HeatNumber
                                 from events.Rounds r
                                 join events.TournamentsRegistration tr
                                        on  tr.TournamentID = r.TournamentID
                                        and tr.CategoryID = r.CategoryID
+                                left join events.HeatsEnties he on he.RegistrationID = tr.RegistrationID
+                                left join events.Heats he_h on he_h.HeatID = he.HeatID and he_h.RoundId = r.RoundID
                                 where  r.RoundID = @roundID
                                   and  (
                                     not exists (
@@ -241,7 +245,7 @@ namespace DancesportCMS_api.Repositories
                                           and ra.Advanced = 1
                                     )
                                   )
-                                order by tr.StartNumber";
+                                order by he_h.HeatNumber, tr.StartNumber";
 
 
             var couples = await conn.QueryAsync<RoundCouple>(couplesSql, new { roundID });
@@ -340,6 +344,56 @@ namespace DancesportCMS_api.Repositories
 
             return (true, null);
         }
+        public async Task<(bool success, string? error)> FinalizeTournamentAsync(long tournamentID)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
+
+            var checkSql = "select IsFinished from events.Tournaments where TournamentID = @tournamentID";
+            var isFinished = await conn.QuerySingleOrDefaultAsync<bool?>(checkSql, new { tournamentID });
+
+            if (isFinished is null)
+                return (false, "Турнирът не съществува");
+
+            if (isFinished == true)
+                return (false, "Турнирът вече е приключил");
+
+                var unfinishedSql = @"
+                    select count(*)
+                    from judging.JudgePanelAssignments jpa
+                    cross join core.CategoryDances cd
+                    join events.Rounds r on r.RoundID = jpa.RoundID
+                    join core.Users u on u.UserID = jpa.UserID
+                    where r.TournamentID = @tournamentID
+                      and r.Status = 'AC'
+                      and u.IsRulesJudge = 0
+                      and cd.CategoryID = r.CategoryID
+                      and not exists (
+                            select 1 from judging.Marks m
+                            where m.RoundID = jpa.RoundID
+                              and m.UserID = jpa.UserID
+                              and m.DanceID = cd.DanceID
+                      )";
+
+            var unfinished = await conn.ExecuteScalarAsync<int>(unfinishedSql, new { tournamentID });
+
+            if (unfinished > 0)
+                return (false, $"Има {unfinished} непопълнени съдийски листи в активните кръгове. Изчакайте съдиите да приключат.");
+
+            try
+            {
+                await conn.ExecuteAsync(
+                    "judging.sp_finalize_tournament",
+                    new { p_TournamentID = tournamentID },
+                    commandType: System.Data.CommandType.StoredProcedure
+                );
+                return (true, null);
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Грешка при финализиране: {ex.Message}");
+            }
+        }
         public async Task <RoundProgress?> GetRoundProgressAsync(long roundID)
         {
             using var conn = new SqlConnection(_connectionString);
@@ -372,14 +426,14 @@ namespace DancesportCMS_api.Repositories
            
                             var judgesSql = @"
                         select u.UserID, u.FName + ' ' + u.LName as Name,
-                               u.JudgeLicense
+                               u.JudgeLicense,u.IsRulesJudge
                         from judging.JudgePanelAssignments jpa
                         join core.Users u on u.UserID = jpa.UserID
                         where jpa.RoundID = @roundID
                         order by u.LName, u.FName";
 
             var judges = (await conn.QueryAsync<JudgeProgress>(judgesSql, new { roundID })).ToList();
-            progress.TotalJudges = judges.Count;
+            progress.TotalJudges = judges.Count(j => !j.IsRulesJudge);
 
                     var couplesSql = @"
                             select count(*)
@@ -501,18 +555,20 @@ namespace DancesportCMS_api.Repositories
                 return (false, "Само АКТИВНИ кръгове могат да бъдат финализирани");
 
                     var unfinishedSql = @"
-                        select count(*)
-                        from   judging.JudgePanelAssignments jpa
-                        cross  join core.CategoryDances cd
-                        join   events.Rounds r on r.RoundID = jpa.RoundID
-                        where  jpa.RoundID = @roundID
-                          and  cd.CategoryID = r.CategoryID
-                          and  not exists (
-                                select 1 from judging.Marks m
-                                where m.RoundID = jpa.RoundID
-                                  and m.UserID = jpa.UserID
-                                  and m.DanceID = cd.DanceID
-                          )";
+                    select count(*)
+                    from judging.JudgePanelAssignments jpa
+                    cross join core.CategoryDances cd
+                    join events.Rounds r on r.RoundID = jpa.RoundID
+                    join core.Users u on u.UserID = jpa.UserID
+                    where jpa.RoundID = @roundID
+                            and u.IsRulesJudge = 0
+                            and cd.CategoryID = r.CategoryID
+                            and not exists (
+                            select 1 from judging.Marks m
+                            where m.RoundID = jpa.RoundID
+                              and m.UserID = jpa.UserID
+                              and m.DanceID = cd.DanceID
+                                    )";
 
             var unfinished = await conn.ExecuteScalarAsync<int>(unfinishedSql, new { roundID });
 
@@ -863,6 +919,105 @@ namespace DancesportCMS_api.Repositories
                 .ToList();
 
             return sheet;
+        }
+        public async Task<TournamentResultsView?> GetTournamentResultsAsync(long tournamentID)
+        {
+            using var conn = new SqlConnection(_connectionString);
+
+                var headerSql = @"
+                select TournamentID, TournamentName, TournamentDate, Location
+                from events.Tournaments
+                where TournamentID = @tournamentID";
+
+            var header = await conn.QuerySingleOrDefaultAsync<TournamentResultsView>(headerSql, new { tournamentID });
+            if (header is null) return null;
+
+            var categoriesSql = @" select distinct r.CategoryID,c.AgeGroup
+                 + case when c.Class is not null then ' ' + c.Class else '' end
+                 + ' ' + c.DanceStyle as CategoryName
+                    from events.Rounds r
+                    join core.Categories c on c.CategoryID = r.CategoryID
+                    where r.TournamentID = @tournamentID
+                      and r.Status = 'CL'
+                    order by CategoryName";
+
+            var categories = (await conn.QueryAsync<CategoryResultGroup>(categoriesSql, new { tournamentID })).ToList();
+
+            foreach (var category in categories)
+            {
+                
+                var roundsSql = @"select RoundID, RoundType
+                            from events.Rounds
+                            where TournamentID = @tournamentID
+                                 and CategoryID = @categoryID
+                                and Status = 'CL'
+                            order by RoundNumber";
+
+                category.Rounds = (await conn.QueryAsync<RoundLink>(roundsSql, new
+                {
+                    tournamentID,
+                    categoryID = category.CategoryID
+                })).ToList();
+
+                var finalRound = category.Rounds.FirstOrDefault(r => r.RoundType == "FN");
+                if (finalRound is not null)
+                {
+                    category.FinalRoundID = finalRound.RoundID;
+
+                    var placementsSql = @"
+                            select res.FinalPlace, tr.StartNumber,tr.RegPartner1Name + ' / ' + tr.RegPartner2Name as CoupleName,
+                            tr.RegClubName as ClubName
+                            from judging.Results res
+                                join events.TournamentsRegistration tr on tr.RegistrationID = res.RegistrationID
+                            where res.RoundID = @finalRoundID
+                            order by res.FinalPlace";
+
+                    category.Placements = (await conn.QueryAsync<FinalPlacement>(placementsSql, new
+                    {
+                        finalRoundID = finalRound.RoundID
+                    })).ToList();
+                }
+            }
+
+            header.Categories = categories.Where(c => c.Placements.Any() || c.Rounds.Any()).ToList();
+
+            return header;
+        }
+        public async Task<(bool success, string? error, int roundsAffected)> AssignHeatsAsync(long tournamentID)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            await conn.OpenAsync();
+
+            var checkSql = "select count(*) from events.Tournaments where TournamentID = @tournamentID";
+            var exists = await conn.ExecuteScalarAsync<int>(checkSql, new { tournamentID });
+
+            if (exists == 0)
+                return (false, "Турнирът не съществува", 0);
+
+            var countSql = @"
+                select count(*) from events.Rounds
+                where TournamentID = @tournamentID
+                    and RoundType = 'QL'
+                    and Status = 'PN'";
+
+            var roundsToProcess = await conn.ExecuteScalarAsync<int>(countSql, new { tournamentID });
+
+            if (roundsToProcess == 0)
+                return (false, "Няма квалификационни кръгове в статус 'Чакащ' за разпределяне", 0);
+
+            try
+            {
+                await conn.ExecuteAsync(
+                    "events.sp_assign_heats",
+                    new { p_TournamentID = tournamentID },
+                    commandType: System.Data.CommandType.StoredProcedure
+                );
+                return (true, null, roundsToProcess);
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Грешка при разпределяне на серии: {ex.Message}", 0);
+            }
         }
     }
 }

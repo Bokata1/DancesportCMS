@@ -8,6 +8,7 @@
         public string Email { get; set; } = string.Empty;
         public bool IsAdmin { get; set; }
         public bool IsJudge { get; set; }
+        public bool IsUser { get; set; }
         public string? JudgeLicense { get; set; }
 
 
@@ -18,6 +19,17 @@
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
     }
-
+    public class UserSessionWithHash
+    {
+        public long UserID { get; set; }
+        public string FName { get; set; } = string.Empty;
+        public string LName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public bool IsAdmin { get; set; }
+        public bool IsJudge { get; set; }
+        public bool IsUser { get; set; }
+        public string? JudgeLicense { get; set; }
+        public string Password { get; set; } = string.Empty;  
+    }
 
 }

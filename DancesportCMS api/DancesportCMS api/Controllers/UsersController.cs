@@ -19,5 +19,6 @@ namespace DancesportCMS_api.Controllers
             var judges = await _repo.GetAllAsync();
             return Ok(judges);
         }
+        
     }
 }

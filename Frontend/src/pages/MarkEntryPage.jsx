@@ -217,19 +217,69 @@ function MarkEntryPage() {
         </div>
       ) : (
         <>
-          <div className="bg-white border border-zinc-200 rounded-lg overflow-hidden mb-6">
-            {round.couples.map(c => (
-              <CoupleRow
-                key={c.registrationID}
-                couple={c}
-                isFinal={isFinal}
-                totalPlaces={totalCouples}
-                currentMark={marks[c.registrationID]}
-                marks={marks}
-                onPlaceClick={handlePlaceClick}
-              />
-            ))}
-          </div>
+          <div className="mb-6">
+  {(() => {
+    const hasHeats = round.couples.some(c => c.heatNumber != null)
+
+    if (!hasHeats) {
+      return (
+        <div className="bg-white border border-zinc-200 rounded-lg overflow-hidden">
+          {round.couples.map(c => (
+            <CoupleRow
+              key={c.registrationID}
+              couple={c}
+              isFinal={isFinal}
+              totalPlaces={totalCouples}
+              currentMark={marks[c.registrationID]}
+              marks={marks}
+              onPlaceClick={handlePlaceClick}
+            />
+          ))}
+        </div>
+      )
+    }
+
+    const heatGroups = round.couples.reduce((acc, c) => {
+      const h = c.heatNumber ?? 0
+      if (!acc[h]) acc[h] = []
+      acc[h].push(c)
+      return acc
+    }, {})
+
+    const heatNumbers = Object.keys(heatGroups).map(Number).sort((a, b) => a - b)
+
+    return (
+      <div className="space-y-5">
+        {heatNumbers.map(heatNum => (
+          <div key={heatNum}>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-semibold text-burgundy-900 uppercase tracking-wider">
+                Серия {heatNum}
+              </span>
+              <span className="text-xs text-zinc-400">
+                ({heatGroups[heatNum].length} двойки)
+              </span>
+            </div>
+            <div className="bg-white border border-zinc-200 rounded-lg overflow-hidden">
+              {heatGroups[heatNum].map(c => (
+                <CoupleRow
+                  key={c.registrationID}
+                  couple={c}
+                  isFinal={isFinal}
+                  totalPlaces={totalCouples}
+                  currentMark={marks[c.registrationID]}
+                  marks={marks}
+                  onPlaceClick={handlePlaceClick}
+                />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )
+          })()}
+        </div>
+
 
           {error && (
             <div className="text-sm text-red-600 mb-4">{error}</div>

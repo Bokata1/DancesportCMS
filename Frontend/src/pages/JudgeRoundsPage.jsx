@@ -71,11 +71,7 @@ function JudgeRoundsPage() {
       ) : (
         <div className="space-y-3">
           {rounds.map(r => (
-            <Link
-              key={r.roundID}
-              to={`/judge/rounds/${r.roundID}`}
-              className="block bg-white border border-zinc-200 rounded-lg p-5 hover:border-burgundy-900 hover:shadow-md transition-all"
-            >
+            <Link to={session.isRulesJudge ? `/judge/rules/${r.roundID}` : `/judge/rounds/${r.roundID}`}>
               <p className="text-sm text-zinc-500 mb-1">{r.tournamentName}</p>
               <h3 className="text-lg font-semibold text-zinc-900 mb-3">
                 {r.categoryName} — {ROUND_TYPE_LABELS[r.roundType] || r.roundType}

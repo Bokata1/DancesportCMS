@@ -52,23 +52,6 @@ function TournamentCard({ tournament }) {
   )
 }
 
-function Section({ title, tournaments, emptyText }) {
-  if (tournaments.length === 0) return null
-
-  return (
-    <section className="mb-10">
-      <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
-        {title}
-      </h2>
-      <div className="space-y-3">
-        {tournaments.map(t => (
-          <TournamentCard key={t.tournamentID} tournament={t} />
-        ))}
-      </div>
-    </section>
-  )
-}
-
 function TournamentsPage() {
   const [tournaments, setTournaments] = useState([])
   const [loading, setLoading] = useState(true)
@@ -85,29 +68,38 @@ function TournamentsPage() {
   if (error) return <p className="text-red-600">Грешка: {error}</p>
 
   const now = new Date()
-  const openForRegistration = tournaments.filter(t => t.isRegistrationOpen && !t.isFinished)
+
+  const openForRegistration = tournaments
+    .filter(t => t.isRegistrationOpen && !t.isFinished)
+    .sort((a, b) => new Date(a.tournamentDate) - new Date(b.tournamentDate))
+
   const upcoming = tournaments
     .filter(t => !t.isRegistrationOpen && !t.isFinished && new Date(t.tournamentDate) >= now)
     .sort((a, b) => new Date(a.tournamentDate) - new Date(b.tournamentDate))
-    .slice(0, 5)
-  const recentlyFinished = tournaments
-    .filter(t => t.isFinished)
-    .sort((a, b) => new Date(b.tournamentDate) - new Date(a.tournamentDate))
-    .slice(0, 5)
 
-  const hasMoreUpcoming = tournaments.filter(t => !t.isRegistrationOpen && !t.isFinished && new Date(t.tournamentDate) >= now).length > 5
-  const hasMoreFinished = tournaments.filter(t => t.isFinished).length > 5
+  const hasNothing = openForRegistration.length === 0 && upcoming.length === 0
 
   return (
     <div>
       <div className="flex items-end justify-between mb-8">
         <h1 className="text-2xl font-semibold text-zinc-900">Турнири</h1>
         <Link to="/tournaments/archive" className="text-sm text-burgundy-900 hover:text-burgundy-700">
-          Виж отминали →
+          Всички турнири →
         </Link>
       </div>
 
-      <Section title="Отворени за регистрация" tournaments={openForRegistration} />
+      {openForRegistration.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
+            Отворени за регистрация
+          </h2>
+          <div className="space-y-3">
+            {openForRegistration.map(t => (
+              <TournamentCard key={t.tournamentID} tournament={t} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {upcoming.length > 0 && (
         <section className="mb-10">
@@ -119,38 +111,16 @@ function TournamentsPage() {
               <TournamentCard key={t.tournamentID} tournament={t} />
             ))}
           </div>
-          {hasMoreUpcoming && (
-            <div className="text-center mt-4">
-              <Link to="/tournaments/archive" className="text-sm text-burgundy-900 hover:text-burgundy-700">
-                Предстоящи →
-              </Link>
-            </div>
-          )}
         </section>
       )}
 
-      {recentlyFinished.length > 0 && (
-        <section className="mb-10">
-          <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
-            Последни резултати
-          </h2>
-          <div className="space-y-3">
-            {recentlyFinished.map(t => (
-              <TournamentCard key={t.tournamentID} tournament={t} />
-            ))}
-          </div>
-          {hasMoreFinished && (
-            <div className="text-center mt-4">
-              <Link to="/tournaments/archive" className="text-sm text-burgundy-900 hover:text-burgundy-700">
-                Виж всички →
-              </Link>
-            </div>
-          )}
-        </section>
-      )}
-
-      {openForRegistration.length === 0 && upcoming.length === 0 && recentlyFinished.length === 0 && (
-        <p className="text-zinc-500 text-center py-12">Няма турнири.</p>
+      {hasNothing && (
+        <div className="text-center py-12">
+          <p className="text-zinc-500 mb-3">Няма предстоящи турнири в момента.</p>
+          <Link to="/tournaments/archive" className="text-sm text-burgundy-900 hover:text-burgundy-700">
+            Всички турнири →
+          </Link>
+        </div>
       )}
     </div>
   )

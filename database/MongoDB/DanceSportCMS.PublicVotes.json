@@ -1,0 +1,36 @@
+[{
+  "_id": {
+    "$oid": "6a25da68c5395022e8164026"
+  },
+  "TournamentID": {
+    "$numberLong": "8"
+  },
+  "CategoryID": {
+    "$numberLong": "1"
+  },
+  "RegistrationID": {
+    "$numberLong": "20004"
+  },
+  "VoterFingerprint": "test-fingerprint-01",
+  "VotedAt": {
+    "$date": "2026-06-07T20:54:00.201Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6a272098f0722775906bf380"
+  },
+  "TournamentID": {
+    "$numberLong": "8"
+  },
+  "CategoryID": {
+    "$numberLong": "1"
+  },
+  "RegistrationID": {
+    "$numberLong": "20004"
+  },
+  "VoterFingerprint": "fp_h5ufzh_mq5n4y70",
+  "VotedAt": {
+    "$date": "2026-06-08T20:05:44.757Z"
+  }
+}]

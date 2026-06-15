@@ -37,5 +37,16 @@ namespace DancesportCMS_api.Controllers
 
                 return Ok(view);
             }
-        }
+
+                [HttpGet("tournament/{tournamentID}")]
+                public async Task<IActionResult> GetTournamentView(long tournamentID)
+                {
+                    var view = await _repo.GetTournamentViewAsync(tournamentID);
+
+                    if (view is null)
+                        return NotFound();
+
+                    return Ok(view);
+                }
+    }
 }

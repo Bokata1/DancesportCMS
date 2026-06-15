@@ -11,7 +11,7 @@ begin
             select  distinct CategoryID
             from events.Rounds
             where TournamentID =@p_TournamentID
-                and Status = 'CL'
+                and Status = 'AC'
 
             open c;
         fetch next from c into @p_cid
@@ -19,11 +19,19 @@ begin
         while @@FETCH_STATUS = 0
             begin 
                     exec judging.sp_finalize_category
+                    @p_TournamentID = @p_TournamentID,
+                    @p_CategoryID = @p_cid
 
                 fetch next from c into @p_cid
                 end
             close c
             deallocate c
+
+                    update events.Tournaments
+                    set IsFinished = 1,
+                    IsRegistrationOpen = 0
+                    where TournamentID = @p_TournamentID
+
 
         end
         go

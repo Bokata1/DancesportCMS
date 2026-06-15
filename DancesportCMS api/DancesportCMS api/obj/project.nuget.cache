@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "CWLgFsp/hUQ=",
+  "dgSpecHash": "4SaNvLBX+lc=",
   "success": true,
   "projectFilePath": "C:\\Users\\Asus\\Desktop\\DancesportCMS\\DancesportCMS api\\DancesportCMS api\\DancesportCMS api.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Asus\\.nuget\\packages\\bcrypt.net-next\\4.2.0\\bcrypt.net-next.4.2.0.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\dapper\\2.1.79\\dapper.2.1.79.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.bcl.cryptography\\8.0.0\\microsoft.bcl.cryptography.8.0.0.nupkg.sha512",

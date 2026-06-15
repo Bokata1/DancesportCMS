@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DancesportCMS api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71cc171611eac415d066480a5b295a15aed679e1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f09184a7dfe9f9d25da97167afec9dc518e528b5")]
 [assembly: System.Reflection.AssemblyProductAttribute("DancesportCMS api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DancesportCMS api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

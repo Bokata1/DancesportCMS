@@ -102,9 +102,10 @@ function AdminRoundPage() {
   const percentComplete = progress.totalMarksExpected > 0
     ? Math.round((progress.totalMarksReceived / progress.totalMarksExpected) * 100)
     : 0
-  const allJudgesComplete = progress.judges.every(j =>
-    j.danceStatuses.every(d => d.isSubmitted)
-  )
+  const allJudgesComplete = progress.judges
+  .filter(j => !j.isRulesJudge)
+  .every(j => j.danceStatuses.every(d => d.isSubmitted))
+  
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -238,8 +239,29 @@ function AdminRoundPage() {
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {progress.judges.map(j => {
+              <tbody>
+                {progress.judges.map(j => {
+                if (j.isRulesJudge) {
+                  return (
+                    <tr
+                      key={j.userID}
+                      className="border-b border-zinc-100 last:border-0 bg-burgundy-50/40"
+                    >
+                      <td className="px-4 py-3">
+                        <div>
+                          <p className="font-medium text-zinc-900">{j.name}</p>
+                          <p className="text-xs text-burgundy-900">Съдия по ограниченията</p>
+                        </div>
+                      </td>
+                      <td
+                        colSpan={progress.dances.length + 1}
+                        className="text-center px-3 py-3 text-sm text-zinc-500"
+                      >
+                      </td>
+                    </tr>
+                  )
+                }
+
                 const submittedCount = j.danceStatuses.filter(d => d.isSubmitted).length
                 const allDone = submittedCount === progress.dances.length
 
@@ -282,12 +304,6 @@ function AdminRoundPage() {
             </tbody>
           </table>
         </div>
-
-        {progress.status === 'AC' && (
-          <p className="text-sm text-zinc-500 mt-3 text-center">
-            Обновяване
-          </p>
-        )}
       </div>
     </div>
   )

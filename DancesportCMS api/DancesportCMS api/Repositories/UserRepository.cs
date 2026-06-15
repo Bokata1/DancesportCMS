@@ -68,16 +68,51 @@ namespace DancesportCMS_api.Repositories
             return session;
         }
 
-        public async Task<UserSession?> LoginAsync(string email,string password)
+        public async Task<UserSession?> LoginAsync(string email, string password)
         {
             using var conn = new SqlConnection(_connectionString);
-            var sql = @"select UserID,Fname,LName,Email,IsAdmin,IsJudge,IsUser,JudgeLicense
+            var sql = @"select UserID,Fname,LName,Email,IsAdmin,IsJudge,IsUser,JudgeLicense, Password
                         from core.Users
-                        where Email =@email
-                         and Password = @password";
-            return await conn.QuerySingleOrDefaultAsync<UserSession>(sql, new { email, password });
+                        where Email =@email";
+            var user = await conn.QuerySingleOrDefaultAsync<UserSessionWithHash>(sql, new { email });
+            if (user is null) return null;
+
+            if (!VerifyPassword(password, user.Password))
+                return null;
+
+            return new UserSession
+            {
+                UserID = user.UserID,
+                FName = user.FName,
+                LName = user.LName,
+                Email = user.Email,
+                IsAdmin = user.IsAdmin,
+                IsJudge = user.IsJudge,
+                IsUser = user.IsUser,
+                JudgeLicense = user.JudgeLicense,
+            };
+
+            //return await conn.QuerySingleOrDefaultAsync<UserSession>(sql, new { email, password });
 
         }
+        public static string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        public static bool VerifyPassword(string password, string hash)
+        {
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(password, hash);
+            }
+            catch
+            {
+               
+                return false;
+            }
+        }
+
         public async Task<IEnumerable<ActiveRoundForJudge>> GetActiveRoundsForJudgeAsync(long userID)
         {
             using var conn = new SqlConnection(_connectionString);
@@ -108,5 +143,7 @@ namespace DancesportCMS_api.Repositories
 
             return await conn.QueryAsync<ActiveRoundForJudge>(sql, new { userID });
         }
+        
+        
     }
 }

@@ -76,6 +76,17 @@ public class TournamentsController : ControllerBase
         var tournaments = await _repo.GetOpenForRegistrationAsync();
         return Ok(tournaments);
     }
+    
+    [HttpPost("{id}/finalize")]
+    public async Task<IActionResult> FinalizeTournament(long id)
+    {
+        var (success, error) = await _repo.FinalizeTournamentAsync(id);
+
+        if (!success)
+            return BadRequest(new { error });
+
+        return Ok(new { success = true });
+    }
 
     [HttpPost("register-couple")]
     public async Task<IActionResult> RegisterCouple([FromBody] CoupleRegistrationRequest request)
@@ -98,5 +109,25 @@ public class TournamentsController : ControllerBase
             return BadRequest(new { error });
 
         return Ok(new { success = true, registrationIDs });
+    }
+        [HttpGet("{id}/results")]
+    public async Task<IActionResult> GetResults(long id)
+    {
+        var results = await _repo.GetTournamentResultsAsync(id);
+
+        if (results is null)
+            return NotFound();
+
+        return Ok(results);
+    }
+    [HttpPost("{id}/assign-heats")]
+    public async Task<IActionResult> AssignHeats(long id)
+    {
+        var (success, error, roundsAffected) = await _repo.AssignHeatsAsync(id);
+
+        if (!success)
+            return BadRequest(new { error });
+
+        return Ok(new { success = true, roundsAffected });
     }
 }

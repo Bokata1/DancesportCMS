@@ -158,3 +158,4 @@ C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\bin\Debu
 C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\bin\Debug\net8.0\SharpCompress.dll
 C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\bin\Debug\net8.0\Snappier.dll
 C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\bin\Debug\net8.0\ZstdSharp.dll
+C:\Users\Asus\Desktop\DancesportCMS\DancesportCMS api\DancesportCMS api\bin\Debug\net8.0\BCrypt-Net-Next.dll

@@ -4,7 +4,7 @@
     {
         public long RegistrationID { get; set; }
         public int StartNumber { get; set; }
-
+        public int? HeatNumber { get; set; }
 
     }
     public class RoundDance 
@@ -14,6 +14,7 @@
         public int DanceOrder {  get; set; }
 
         }
+    
 
     public class  RoundForJudging
     {

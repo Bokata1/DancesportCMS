@@ -87,7 +87,7 @@ namespace DancesportCMS_api.Repositories
             using var conn = new SqlConnection(_sqlConnectionString);
 
             var headerSql = @"
-                select r.RoundID, t.TournamentName,c.AgeGroup + case when c.Class is not null then ' ' + c.Class else '' end
+                select r.RoundID,r.TournamentID,r.CategoryID, t.TournamentName,c.AgeGroup + case when c.Class is not null then ' ' + c.Class else '' end
                          + ' ' + c.DanceStyle as CategoryName
                 from events.Rounds r
                     join events.Tournaments t on t.TournamentID = r.TournamentID
@@ -137,6 +137,88 @@ namespace DancesportCMS_api.Repositories
             round.Couples = couples;
 
             return round;
+        }
+        public async Task<TournamentViolationsView?> GetTournamentViewAsync(long tournamentID)
+        {
+            using var conn = new SqlConnection(_sqlConnectionString);
+
+                var headerSql = @"
+                    select TournamentID, TournamentName
+                    from events.Tournaments
+                    where TournamentID = @tournamentID";
+
+            var header = await conn.QuerySingleOrDefaultAsync<TournamentViolationsView>(headerSql, new { tournamentID });
+            if (header is null) return null;
+
+            var roundsSql = @" select r.RoundID, r.CategoryID, r.RoundType,c.AgeGroup + case when c.Class is not null then ' ' + c.Class else '' end
+                 + ' ' + c.DanceStyle as CategoryName
+                from events.Rounds r
+                join core.Categories c on c.CategoryID = r.CategoryID
+                where r.TournamentID = @tournamentID
+                order by r.CategoryID, r.RoundNumber";
+
+            var rounds = (await conn.QueryAsync<CategoryViolationsGroup>(roundsSql, new { tournamentID })).ToList();
+
+            var filter = Builders<RulesViolation>.Filter.Eq(v => v.TournamentID, tournamentID);
+            var allViolations = await _violations.Find(filter).ToListAsync();
+
+            header.TotalViolations = allViolations.Count;
+
+            // dance nme
+            var danceIDs = allViolations
+                .Where(v => v.DanceID.HasValue)
+                .Select(v => v.DanceID!.Value)
+                .Distinct()
+                .ToList();
+
+            var danceMap = new Dictionary<long, string>();
+            if (danceIDs.Any())
+            {
+                var dancesSql = @"select DanceID, Name from core.Dances where DanceID in @danceIDs";
+                var danceRows = await conn.QueryAsync<(long DanceID, string Name)>(dancesSql, new { danceIDs });
+                danceMap = danceRows.ToDictionary(d => d.DanceID, d => d.Name);
+            }
+
+            // for round flg cpl
+            foreach (var round in rounds)
+            {
+                var roundViolations = allViolations.Where(v => v.RoundID == round.RoundID).ToList();
+                if (!roundViolations.Any()) continue;
+
+                var flaggedRegistrationIDs = roundViolations.Select(v => v.RegistrationID).Distinct().ToList();
+
+                var couplesSql = @" select RegistrationID, StartNumber,RegPartner1Name + ' / ' + RegPartner2Name as CoupleName,RegClubName as ClubName
+                        from events.TournamentsRegistration
+                        where RegistrationID in @flaggedRegistrationIDs
+                        order by StartNumber";
+
+                var couples = (await conn.QueryAsync<CoupleViolationDetail>(couplesSql,
+                    new { flaggedRegistrationIDs })).ToList();
+
+                foreach (var couple in couples)
+                {
+                    couple.HasCostumeFlag = roundViolations.Any(v =>
+                        v.RegistrationID == couple.RegistrationID && v.FlagType == "Costume");
+
+                    couple.ChoreographyFlags = roundViolations
+                        .Where(v => v.RegistrationID == couple.RegistrationID
+                                 && v.FlagType == "Choreography"
+                                 && v.DanceID.HasValue)
+                        .Select(v => new DanceFlagInfo
+                        {
+                            DanceID = v.DanceID!.Value,
+                            DanceName = danceMap.GetValueOrDefault(v.DanceID.Value, "?")
+                        })
+                        .ToList();
+                }
+
+                round.Couples = couples;
+            }
+
+            // onl rounds sus flagged couples
+            header.Categories = rounds.Where(r => r.Couples.Any()).ToList();
+
+            return header;
         }
     }
 }

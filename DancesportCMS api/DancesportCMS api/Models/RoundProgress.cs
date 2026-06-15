@@ -22,6 +22,7 @@
         public long UserID { get; set; }
         public string Name { get; set; } = string.Empty;
         public string JudgeLicense { get; set; } = string.Empty;
+        public bool IsRulesJudge { get; set; }
         public List<DanceStatus> DanceStatuses { get; set; } = new();
     }
 

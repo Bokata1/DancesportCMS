@@ -62,6 +62,28 @@ function AdminTournamentPage() {
       .finally(() => setLoading(false))
   }
 
+  const handleFinalizeTournament = async () => {
+  if (!confirm('Сигурни ли сте? Това ще приключи всички активни кръгове и ще маркира турнира като завършен. Действието не може да бъде отменено.')) return
+
+  try {
+    await api.tournaments.finalize(id)
+    loadAll()
+  } catch (err) {
+    alert('Грешка: ' + err.message)
+  }
+}
+const handleAssignHeats = async () => {
+  if (!confirm('Това ще разпредели двойките по серии за всички квалификационни кръгове в статус "Чакащ". Продължаване?')) return
+
+  try {
+    const result = await api.tournaments.assignHeats(id)
+    alert(`Сериите са разпределени за ${result.roundsAffected} кръг(а).`)
+    loadAll()
+  } catch (err) {
+    alert('Грешка: ' + err.message)
+  }
+}
+
   const handleToggleRegistration = async () => {
     try {
       await api.tournaments.setRegistration(id, !tournament.isRegistrationOpen)
@@ -94,6 +116,14 @@ function AdminTournamentPage() {
 
       <div className="mb-8">
         <h1 className="text-3xl font-semibold text-zinc-900 mb-2">{tournament.tournamentName}</h1>
+        <div className="flex gap-3 mb-6">
+    <Link
+    to={`/admin/tournaments/${id}/violations`}
+    className="inline-flex items-center text-sm text-zinc-700 hover:text-burgundy-900"
+    >
+    Виж нарушенията
+  </Link>
+</div>
         <p className="text-zinc-600">{date} · {tournament.location}</p>
       </div>
 
@@ -121,7 +151,40 @@ function AdminTournamentPage() {
           </button>
         </div>
       </div>
-
+            {!tournament.isFinished && (
+            <div className="bg-white border border-zinc-200 rounded-lg p-5 mb-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-semibold text-zinc-900 mb-1">Финализиране на турнира</h3>
+                  <p className="text-sm text-zinc-500">
+                    Приключва всички активни кръгове и маркира турнира като завършен.
+                  </p>
+                </div>
+                <button
+                  onClick={handleFinalizeTournament}
+                  className="px-4 py-2 bg-burgundy-900 text-white rounded-lg font-medium hover:bg-burgundy-800"
+                >
+                  Финализирай турнира
+                </button>
+              </div>
+            </div>
+          )}
+          <div className="bg-white border border-zinc-200 rounded-lg p-5 mb-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-zinc-900 mb-1">Разпределяне на серии</h3>
+                  <p className="text-sm text-zinc-500">
+                  Разпределя двойките по серии (heats) за квалификационните кръгове в статус "Чакащ".
+                  </p>
+              </div>
+                  <button
+                    onClick={handleAssignHeats}
+                    className="px-4 py-2 border border-zinc-300 text-zinc-700 rounded-lg font-medium hover:bg-zinc-50"
+                  >
+                    Разпредели серии
+                </button>
+              </div>
+            </div>
       {}
       <div className="flex items-center justify-between mb-3">
         <h2 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
@@ -152,7 +215,7 @@ function AdminTournamentPage() {
                   onClick={() => setQrCategory({ name: category, id: rounds[0]?.categoryID })}
                   className="text-sm text-burgundy-900 hover:text-burgundy-700"
                 >
-                📱 Покажи QR код
+                 Покажи QR код
               </button> 
             </div>
               <div className="space-y-2">
